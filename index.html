@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+    <meta charset="UTC-8">
+    <title>The Duel</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+</head>
+
+<body>
+
+    <div class=header>
+        <h1>A Wizard's Duel!</h1>
+    </div>
+
+    <div class=conatiner>
+        <div id="characterRow" class="row">
+            <div class="col-sm-1 col-md-1">
+            </div>
+
+            <div class="col-sm-2 col-md-2">
+                <div id="Harry Potter" class="thumbnail">
+                    <img id="Harry" src="https://pre12.deviantart.net/1ffd/th/pre/f/2013/266/e/c/harry_potter_and_the_deathly_hallows__d_by_speedportraits-d6nccbt.jpg" alt="Harry Potter">
+                    <div class="caption">
+                        <h3 class="name"><strong>Harry Potter</strong></h3>
+                        <p class="healthPoints">HP: 150</p>
+                        <p class="attackPower">Attack: 8</p>
+                        <p class="counterAttackPower">Counter: 10</p>
+                        <p><a href="#" class="btn btn-primary" role="button">Cast!</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-2 col-md-2">
+                <div id="Hermione Granger" class="thumbnail">
+                    <img src="https://vignette.wikia.nocookie.net/the-mighty-slytherins/images/3/3e/Hermione.jpg/revision/latest?cb=20131202193222" alt="Hermione Granger">
+                    <div class="caption">
+                        <h3 class="name">Hermione Granger</h3>
+                        <p class="healthPoints">HP: 120</p>
+                        <p class="attackPower">Attack: 10</p>
+                        <p class="counterAttackPower">Counter: 25</p>
+                        <p><a href="#" class="btn btn-primary" role="button">Cast!</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-2 col-md-2">
+                <div id="Dean Thomas" class="thumbnail">
+                    <img src="https://images.pottermore.com/bxd3o8b291gf/7crsyiIlJ6O24AUMGoWko/5c00fd70a61d2ef26f641df395b69327/DeanThomas_WB_F5_DeanThomasLeaningOnChair_Promo_080615_Port.jpg?w=1200" alt="Dean Thomas">
+                    <div class="caption">
+                        <h3 class="name">Dean Thomas</h3>
+                        <p class="healthPoints">HP: 140</p>
+                        <p class="attackPower">Attack: 7</p>
+                        <p class="counterAttackPower">Counter: 15</p>
+                        <p><a href="#" class="btn btn-primary" role="button">Cast!</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-2 col-md-2">
+                <div id="Cho Chang" class="thumbnail">
+                    <img src="https://vignette.wikia.nocookie.net/harrypotter/images/8/88/Cho-chang1.jpg/revision/latest?cb=20161217054602" alt="Cho Chang">
+                    <div class="caption">
+                        <h3 class="name">Cho Chang</h3>
+                        <p class="healthPoints">HP: 110</p>
+                        <p class="attackPower">Attack: 9</p>
+                        <p class="counterAttackPower">Counter: 20</p>
+                        <p><a href="#" class="btn btn-primary" role="button">Cast!</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-2 col-md-2">
+                <div id="Ron Weasely" class="thumbnail">
+                    <img src="https://i.pinimg.com/736x/a4/f6/ff/a4f6ff2283f6391407a455e100ae7173--fantasy-movies-movie-posters.jpg" alt="Ron Weasley">
+                    <div class="caption">
+                        <h3 class="name">Ron Weasley</h3>
+                        <p class="healthPoints">HP: 130</p>
+                        <p class="attackPower">Attack: 6</p>
+                        <p class="counterAttackPower">Counter: 30</p>
+                        <p><a href="#" class="btn btn-primary" role="button">Cast!</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-1 col-md-1">
+            </div>
+        </div>
+    </div>
+
+    <div class=arena>
+        <div class="row">
+            <div class="col-sm-6 col-md-4">
+            </div>
+
+            <div id="heroStage" class="col-sm-6 col-md-2">
+            </div>
+
+            <div id="enemyStage" class="col-sm-6 col-md-2">
+            </div>
+
+            <div class="col-sm-6 col-md-4">
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src=assets/javascript/game.js></script>
+
+</body>
+
+</html>
