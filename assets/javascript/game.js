@@ -10,15 +10,46 @@ $(document).ready(function() {
     var enemy;
     var enemyCounter;
     var resetDuel;
-    
-    
+    var healthPoints;
+    var attackPower;
+
+    var harryPotter = {
+        health: 150,
+        attack: 8,
+        counter: 10,
+    }
+
+    var hermioneGranger = {
+        health: 120,
+        attack: 10,
+        counter: 25,
+    }
+
+    var deanThomas = {
+        health: 140,
+        attack: 7,
+        counter: 15,
+    }
+
+    var choChang = {
+        health: 110,
+        attack: 9,
+        counter: 20,
+    }
+
+    var ronWeasley = {
+        health: 130,
+        attack: 6,
+        counter: 30,
+    }
+
     $('.thumbnail').on('click', function() {
         var chosenId = $(this).attr('id'); // grab id of clicked character
 
         switch (choosing) {
             case CHOOSING_PLAYER:
                 hero = chosenId;
-                alert('Your hero is ' + hero + '!');
+                alert('You are entering the duel as ' + hero + "! Best of Luck.");
                 hero = $(this).detach();
                 hero.appendTo('#heroStage');
 
@@ -27,7 +58,7 @@ $(document).ready(function() {
 
             case CHOOSING_ENEMY:
                 enemy = chosenId;
-                alert('Your enemy is ' + enemy + '!');
+                alert('You have chosen ' + enemy + ' as your enemy!');
                 enemy = $(this).detach();
                 enemy.appendTo('#enemyStage');
                 choosing = CHOOSING_DONE;
@@ -49,34 +80,51 @@ $(document).ready(function() {
     // HERO AND ENEMY DUEL
     // enable cast button for hero only
     // onclick for cast button
-    function heroCast(healthPoints - attackPower) {
-
-    }
 
     $('.btn').on('click', function() {
-        alert('it works!');
+        // computer must recognize which hero was chosen
+        var chosenId = $(this).attr('id');
         CHOOSING_DONE = false;
-        // hero casts a spell (enemyHP - hero attack power)
-        heroCast();
-        console.log(heroCast);
-        // update enemy HP
-        // hero attack power increases ^ base power, never resets
+        alert('Lumos!');
+        hero = chosenId;
+        console.log(hero);
     });
+    // use button id to identify variables?
+    // this.healthPoints, this.attackPower, this.counterAttackPower??
+
+    // computer must recognize which enemy was chosen and then run math functions to update stats
+
+
+    //  be able to call upon their health/attack powers
+    // can this layer access chosenId or hero/enemy?
+    // if no, redefine under button click
+    // define variables for each thumbnail selected
+    //  hero casts a spell on the enemy (enemyHP - hero attack power)
+    // if hero==="hero name/thumbnail id", then... set as an object with 3 properties, hp, ap, cap
+    // run math function to determine how much health enemy lost (enemy hp - hero attack power)
 
 
 
-    // enemy automatically counter attacks (hero HP - opponent counter power)
-    // update hero HP
-    // continue to cast until enemy hp === 0 or hero hp === 0
 
-    // WINNER OR LOSER?
-    // if enemy hp === 0, enemy disappears/hides
-    // player chooses a new enemy
-    // process above repeats
-
-    // if hero hp === 0, player loses
-    // game restarts
-
-    // if player defeats all enemies, player wins game!
-    // alert winner!
+    // update enemy HP in thumbnail
+    // hero attack power increases ^ base power, never resets
 });
+
+
+
+// enemy automatically counter attacks (hero HP - opponent counter power)
+
+
+// update hero HP
+// continue to cast until enemy hp === 0 or hero hp === 0
+
+// WINNER OR LOSER?
+// if enemy hp === 0, enemy disappears/hides
+// player chooses a new enemy
+// process above repeats
+
+// if hero hp === 0, player loses
+// game restarts
+
+// if player defeats all enemies, player wins game!
+// alert winner!
