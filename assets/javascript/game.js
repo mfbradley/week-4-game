@@ -1,7 +1,6 @@
-// declare variables
-// all characters as objects with name, HP, Attack, Counter
-
 $(document).ready(function () {
+
+    // VARIABLES
     var CHOOSING_PLAYER = 'CHOOSING_PLAYER';
     var CHOOSING_ENEMY = 'CHOOSING_ENEMY';
     var CHOOSING_DONE = 'CHOOSING_DONE';
@@ -49,9 +48,33 @@ $(document).ready(function () {
             attack: 6,
             counter: 30,
             image: "assets/images/ron.jpg"
+        },
+        {
+            name:"Draco Malfoy",
+            health: 170,
+            attack: 7,
+            counter: 15,
+            image: "assets/images/draco.jpg"
         }
+
     ]
 
+    
+    // FUNCTIONS
+    function appendImages() {
+        for (var i = 0; i < characters.length; i++) {
+            var htmlImages = "<div class='col-md-2'><img src='" + characters[i].image + "' /></div>"
+
+            $("#characterRow").append(htmlImages);
+            console.log(characters[i]);
+            console.log(characters[i].image);
+        }
+    }
+
+    appendImages();
+
+    console.log(characters)
+    // LOGIC
     $('.thumbnail').on('click', function () {
         var chosenId = $(this).attr('id'); // grab id of clicked character
 
