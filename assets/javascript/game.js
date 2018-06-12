@@ -18,34 +18,40 @@ $(document).ready(function () {
             name: "Harry Potter",
             health: 150,
             attack: 8,
-            counter: 10
+            counter: 10,
+            image: "assets/images/hp.jpg"
+
         },
         {
             name: "Hermione Granger",
             health: 120,
             attack: 10,
-            counter: 25
+            counter: 25,
+            image: "assets/images/hermione.jpg"
         },
         {
             name: "Dean Thomas",
             health: 140,
             attack: 7,
-            counter: 15
+            counter: 15,
+            image: "assets/images/dean.png"
         },
         {
             name: "Cho Chung",
             health: 110,
             attack: 9,
-            counter: 20
+            counter: 20,
+            image: "assets/images/cho.jpg"
         },
         {
             name:"Ron Weasley",
             health: 130,
             attack: 6,
-            counter: 30
+            counter: 30,
+            image: "assets/images/ron.jpg"
         }
     ]
-    
+
     $('.thumbnail').on('click', function () {
         var chosenId = $(this).attr('id'); // grab id of clicked character
 
