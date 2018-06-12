@@ -1,7 +1,7 @@
 // declare variables
 // all characters as objects with name, HP, Attack, Counter
 
-$(document).ready(function() {
+$(document).ready(function () {
     var CHOOSING_PLAYER = 'CHOOSING_PLAYER';
     var CHOOSING_ENEMY = 'CHOOSING_ENEMY';
     var CHOOSING_DONE = 'CHOOSING_DONE';
@@ -13,37 +13,40 @@ $(document).ready(function() {
     var healthPoints;
     var attackPower;
 
-    var harryPotter = {
-        health: 150,
-        attack: 8,
-        counter: 10,
-    }
-
-    var hermioneGranger = {
-        health: 120,
-        attack: 10,
-        counter: 25,
-    }
-
-    var deanThomas = {
-        health: 140,
-        attack: 7,
-        counter: 15,
-    }
-
-    var choChang = {
-        health: 110,
-        attack: 9,
-        counter: 20,
-    }
-
-    var ronWeasley = {
-        health: 130,
-        attack: 6,
-        counter: 30,
-    }
-
-    $('.thumbnail').on('click', function() {
+    var characters = [
+        {
+            name: "Harry Potter",
+            health: 150,
+            attack: 8,
+            counter: 10
+        },
+        {
+            name: "Hermione Granger",
+            health: 120,
+            attack: 10,
+            counter: 25
+        },
+        {
+            name: "Dean Thomas",
+            health: 140,
+            attack: 7,
+            counter: 15
+        },
+        {
+            name: "Cho Chung",
+            health: 110,
+            attack: 9,
+            counter: 20
+        },
+        {
+            name:"Ron Weasley",
+            health: 130,
+            attack: 6,
+            counter: 30
+        }
+    ]
+    
+    $('.thumbnail').on('click', function () {
         var chosenId = $(this).attr('id'); // grab id of clicked character
 
         switch (choosing) {
@@ -68,8 +71,8 @@ $(document).ready(function() {
                 alert("You've already chosen. Start casting!");
                 break;
 
-                // default:
-                //     alert('Error. Variable choosing has unrecognized value.');
+            // default:
+            //     alert('Error. Variable choosing has unrecognized value.');
         }
 
     });
@@ -81,7 +84,7 @@ $(document).ready(function() {
     // enable cast button for hero only
     // onclick for cast button
 
-    $('.btn').on('click', function() {
+    $('.btn').on('click', function () {
         // computer must recognize which hero was chosen
         var chosenId = $(this).attr('id');
         CHOOSING_DONE = false;
