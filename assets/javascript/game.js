@@ -38,7 +38,7 @@ $(document).ready(function () {
     function appendImages() {
         for (var i = 0; i < characters.length; i++) {
             var charContain = $("<div class='col-md-2 start'></div>")
-            var newDiv = $("<div class='charDiv'></div>")
+            var newDiv = $("<div id='"+ i +"'class='charDiv'></div>")
             var newImage = $("<img id='" + characters[i].name + "' style='position: relative;' class='char' src='" + characters[i].image + "' />");
             
             $(newDiv).append(newImage)
@@ -48,17 +48,6 @@ $(document).ready(function () {
             console.log(characters[i])
 
         }
-
-        //  for (var i = 0; i < characters.length; i++) {
-            // var newDiv = $("<div style='height: 200px;' class='col-md-2 charDiv'></div>")
-            
-            // $(newDiv).append(newImage)
-            // $(newDiv).append(castBtn)
-            // $("#characterRow").append(newDiv);
-            // console.log(characters[i])
-
-        // }
-
     }
 
     function selections() {
@@ -68,10 +57,10 @@ $(document).ready(function () {
         switch (choosing) {
             case CHOOSING_PLAYER:
                 hero = $(this).attr('id')
-                $(this).parent().attr('id', 'hero')
+                $(this).parent().attr('class', 'hero')
                 alert('You are entering the duel as ' + hero + "! Best of Luck.");
                 var castBtn = $("<button class='cast' style='position: absolute; bottom: 10px; right: 30px'>Cast!</button>");
-                $("#hero").append(castBtn)
+                $(".hero").append(castBtn)
                 hero = $(this).parent().detach();
                 hero.appendTo('#heroStage');
 
@@ -84,6 +73,7 @@ $(document).ready(function () {
                 enemy = $(this).parent().detach();
                 console.log(enemy)
                 enemy.appendTo('#enemyStage');
+                enemyIndex = $(this).parent().attr('id')
                 choosing = CHOOSING_DONE;
                 break;
 
@@ -98,53 +88,32 @@ $(document).ready(function () {
     };
 
     function cast() {
-        alert("lumos!")
-        character = $(this).siblings('.char').attr('id')
-        console.log("hero: ")
-        console.log(hero)
-        console.log("enemy: ")
-        console.log(enemy)
+        
+        var index = $(this).parent().attr('id')
+        hero = characters[index]
+        enemy = characters[enemyIndex]
+        alert("lumos! you are attacking " + enemy.name)
+        
+        // hero attacks enemy
+        enemy.health = enemy.health - hero.attack
+        console.log(enemy.health)
+        alert(enemy.name + "'s health was damaged by your attack and has been decreased to " + enemy.health)
+        // enemy counter attacks hero
+        hero.health = hero.health - enemy.counter;
+        console.log(hero.health)
+        alert(enemy.name + ' countered your attack! your currenth health is ' + hero.health)
+        // var Character = function (name, health, attack, counter, image)
 
     }
 
     appendImages();
     $(document).on('click', '.char', selections);
     $(document).on('click', '.cast', cast)
-    // end logging of second image/enemy
-    // disable image clicks
-
-    // HERO AND ENEMY DUEL
-    // enable cast button for hero only
-    // onclick for cast button
-
-    // use button id to identify variables?
-    // this.healthPoints, this.attackPower, this.counterAttackPower??
-
-    // computer must recognize which enemy was chosen and then run math functions to update stats
-
-
-    //  be able to call upon their health/attack powers
-    // can this layer access chosenId or hero/enemy?
-    // if no, redefine under button click
-    // define variables for each thumbnail selected
-    //  hero casts a spell on the enemy (enemyHP - hero attack power)
-    // if hero==="hero name/thumbnail id", then... set as an object with 3 properties, hp, ap, cap
-    // run math function to determine how much health enemy lost (enemy hp - hero attack power)
-
-
-
-
-    // update enemy HP in thumbnail
-    // hero attack power increases ^ base power, never resets
+    
 });
 
 
 
-// enemy automatically counter attacks (hero HP - opponent counter power)
-
-
-// update hero HP
-// continue to cast until enemy hp === 0 or hero hp === 0
 
 // WINNER OR LOSER?
 // if enemy hp === 0, enemy disappears/hides
