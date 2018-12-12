@@ -1,6 +1,7 @@
 $(document).ready(function () {
 
     // VARIABLES
+    var characters = [];
     var CHOOSING_PLAYER = 'CHOOSING_PLAYER';
     var CHOOSING_ENEMY = 'CHOOSING_ENEMY';
     var CHOOSING_DONE = 'CHOOSING_DONE';
@@ -12,77 +13,66 @@ $(document).ready(function () {
     var healthPoints;
     var attackPower;
 
-    var characters = [
-        {
-            name: "Harry Potter",
-            health: 150,
-            attack: 8,
-            counter: 10,
-            image: "assets/images/hp.jpg"
+    var Character = function (name, health, attack, counter, image) {
+        this.name = name,
+            this.health = health,
+            this.attack = attack,
+            this.counter = counter,
+            this.image = image,
+            this.printStats = function () {
+                console.log("Name: " + this.name + "\nHealth: " + this.health + "\nAttack: " + this.attack + "\nCounter: " + this.counter + "\n---------------------------")
+            }
+    }
 
-        },
-        {
-            name: "Hermione Granger",
-            health: 120,
-            attack: 10,
-            counter: 25,
-            image: "assets/images/hermione.jpg"
-        },
-        {
-            name: "Dean Thomas",
-            health: 140,
-            attack: 7,
-            counter: 15,
-            image: "assets/images/dean.png"
-        },
-        {
-            name: "Cho Chung",
-            health: 110,
-            attack: 9,
-            counter: 20,
-            image: "assets/images/cho.jpg"
-        },
-        {
-            name:"Ron Weasley",
-            health: 130,
-            attack: 6,
-            counter: 30,
-            image: "assets/images/ron.jpg"
-        },
-        {
-            name:"Draco Malfoy",
-            health: 170,
-            attack: 7,
-            counter: 15,
-            image: "assets/images/draco.jpg"
-        }
+    var harry = new Character("Harry Potter", 150, 8, 10, "assets/images/hp.jpg");
+    var hermoine = new Character("Hermione Granger", 120, 10, 25, "assets/images/hermione.jpg");
+    var dean = new Character("Dean Thomas", 140, 7, 15, "assets/images/dean.png");
+    var cho = new Character("Cho Chung", 110, 9, 20, "assets/images/cho.jpg");
+    var ron = new Character("Ron Weasley", 130, 6, 30, "assets/images/ron.jpg");
+    var draco = new Character("Draco Malfoy", 170, 7, 15, "assets/images/draco.jpg")
 
-    ]
+    characters.push(harry, hermoine, dean, cho, ron, draco);
 
-    
+
     // FUNCTIONS
     function appendImages() {
         for (var i = 0; i < characters.length; i++) {
-            var htmlImages = "<div class='col-md-2'><img src='" + characters[i].image + "' /></div>"
+            var charContain = $("<div class='col-md-2 start'></div>")
+            var newDiv = $("<div class='charDiv'></div>")
+            var newImage = $("<img id='" + characters[i].name + "' style='position: relative;' class='char' src='" + characters[i].image + "' />");
+            
+            $(newDiv).append(newImage)
+            
+            $(charContain).append(newDiv)
+            $("#characterRow").append(charContain);
+            console.log(characters[i])
 
-            $("#characterRow").append(htmlImages);
-            console.log(characters[i]);
-            console.log(characters[i].image);
         }
+
+        //  for (var i = 0; i < characters.length; i++) {
+            // var newDiv = $("<div style='height: 200px;' class='col-md-2 charDiv'></div>")
+            
+            // $(newDiv).append(newImage)
+            // $(newDiv).append(castBtn)
+            // $("#characterRow").append(newDiv);
+            // console.log(characters[i])
+
+        // }
+
     }
 
-    appendImages();
-
-    console.log(characters)
-    // LOGIC
-    $('.thumbnail').on('click', function () {
+    function selections() {
         var chosenId = $(this).attr('id'); // grab id of clicked character
+        console.log(chosenId);
 
         switch (choosing) {
             case CHOOSING_PLAYER:
-                hero = chosenId;
+                hero = $(this).attr('id')
+                $(this).parent().attr('id', 'hero')
                 alert('You are entering the duel as ' + hero + "! Best of Luck.");
-                hero = $(this).detach();
+                var castBtn = $("<button class='cast' style='position: absolute; bottom: 10px; right: 30px'>Cast!</button>");
+                $("#hero").append(castBtn)
+                hero = $(this).parent().detach();
                 hero.appendTo('#heroStage');
 
                 choosing = CHOOSING_ENEMY;
@@ -91,7 +81,8 @@ $(document).ready(function () {
             case CHOOSING_ENEMY:
                 enemy = chosenId;
                 alert('You have chosen ' + enemy + ' as your enemy!');
-                enemy = $(this).detach();
+                enemy = $(this).parent().detach();
+                console.log(enemy)
                 enemy.appendTo('#enemyStage');
                 choosing = CHOOSING_DONE;
                 break;
@@ -100,12 +91,25 @@ $(document).ready(function () {
                 alert("You've already chosen. Start casting!");
                 break;
 
-            // default:
-            //     alert('Error. Variable choosing has unrecognized value.');
+            default:
+                alert('Error. Variable choosing has unrecognized value.');
         }
 
-    });
+    };
 
+    function cast() {
+        alert("lumos!")
+        character = $(this).siblings('.char').attr('id')
+        console.log("hero: ")
+        console.log(hero)
+        console.log("enemy: ")
+        console.log(enemy)
+
+    }
+
+    appendImages();
+    $(document).on('click', '.char', selections);
+    $(document).on('click', '.cast', cast)
     // end logging of second image/enemy
     // disable image clicks
 
@@ -113,14 +117,6 @@ $(document).ready(function () {
     // enable cast button for hero only
     // onclick for cast button
 
-    $('.btn').on('click', function () {
-        // computer must recognize which hero was chosen
-        var chosenId = $(this).attr('id');
-        CHOOSING_DONE = false;
-        alert('Lumos!');
-        hero = chosenId;
-        console.log(hero);
-    });
     // use button id to identify variables?
     // this.healthPoints, this.attackPower, this.counterAttackPower??
 
