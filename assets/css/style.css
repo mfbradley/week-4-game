@@ -1,11 +1,16 @@
 body {
-    max-width: 1200px;
-    max-height: 600px;
+    width: 100vw;
+    height: 100vh;
     /* margin: auto; */
-    background-image: url("../images/Training_grounds.jpg");
+    /* background-image: url("../images/Training_grounds.jpg"); */
     background-repeat: no-repeat;
-    background-size: 100%;
+    background-size: cover;
     text-align: center;
+}
+
+.gryfImg, .huffImg, .slythImg, .raveImg {
+    width: 100%;
+    height: 50vh;
 }
 
 .char {

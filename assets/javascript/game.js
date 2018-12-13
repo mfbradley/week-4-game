@@ -1,11 +1,31 @@
+
+
+
+
+// load choose your enemy house screen
+// user picks enemy
+// load duel screen (hero on left enemy on right)
+// duel
+// on win or lose, ask user if they want to challenge a new player
+
 $(document).ready(function () {
+    // user picks house
+    // show choose your house div only - hide all others
+    $("#duel").hide();
+    $("#enemyHouse").hide();
 
     // VARIABLES
-    var characters = [];
+    // var characters = [];
+    var gryfArr = [];
+    var huffArr = [];
+    var raveArr = [];
+    var slythArr = [];
+    var houses = [];
     var CHOOSING_PLAYER = 'CHOOSING_PLAYER';
     var CHOOSING_ENEMY = 'CHOOSING_ENEMY';
     var CHOOSING_DONE = 'CHOOSING_DONE';
     var choosing = CHOOSING_PLAYER;
+    var chosenHouse;
     var hero;
     var enemy;
     var enemyCounter;
@@ -13,6 +33,7 @@ $(document).ready(function () {
     var healthPoints;
     var attackPower;
 
+    // create characters
     var Character = function (name, health, attack, counter, image) {
         this.name = name,
             this.health = health,
@@ -31,18 +52,80 @@ $(document).ready(function () {
     var ron = new Character("Ron Weasley", 130, 6, 30, "assets/images/ron.jpg");
     var draco = new Character("Draco Malfoy", 170, 7, 15, "assets/images/draco.jpg")
 
-    characters.push(harry, hermoine, dean, cho, ron, draco);
+    // characters.push(harry, hermoine, dean, cho, ron, draco);
+    gryfArr.push(harry, hermoine, ron, cho)
+    console.log(gryfArr)
+
+    var House = function(short, name, image, characters) {
+        this.short = short
+        this.name = name;
+        this.image = image;
+        this.characters = characters;
+    }
+
+    var gryf = new House("gryf", "Gryffindor", "https://i.imgur.com/jnHkdOy.gif", gryfArr)
+    var huff = new House("huff", "Hufflepuff", "https://i.imgur.com/cV2E3T0.jpg", huffArr)
+    var rave = new House("rave", "Ravenclaw", "https://s-media-cache-ak0.pinimg.com/originals/95/87/f3/9587f305825d378206019edddd392a19.gif", raveArr)
+    var slyth = new House("slyth", "Slytherin", "https://i.pinimg.com/originals/72/86/8e/72868ea628013cb62ae0de1aa8e6d2c0.gif", slythArr)
+
+    houses.push(gryf, huff, rave, slyth)
+    console.log(houses)
 
 
+    function showHouses(array, rowId) {
+        array.forEach(function(house) {
+            var imgDiv = $('<div class="col-md-3 house "' + house.short + '" data-house="' + house.name + '"><img class="' + house.short +'Img" src="' + house.image + '" alt=""></div>');
+            $("." + rowId + "").append(imgDiv);
+        });
+        console.log("working!")
+    };
+
+    showHouses(houses, "houseRow");
+    $(document).on("click", '.house', chooseHouse)
+
+    function chooseHouse() {
+        chosenHouse = $(this).attr("data-house");
+        console.log(chosenHouse)
+        alert("Welcome to " + chosenHouse + "!")
+        const housesLeft = houses.filter(
+            house => chosenHouse !== house.name
+        )
+        
+        console.log(housesLeft);
+        $("#house").hide();
+        showHouses(housesLeft, "enemyRow")
+        $("#enemyHouse").show();
+        
+        
+    }
+
+  
+
+    function choosePlayer(houseArr) {
+        console.log(gryf)
+        for (var i = 0; i < gryf.length; i++) {
+            var charContain = $("<div class='col-md-2 start'></div>")
+            var newDiv = $("<div id='" + i + "'class='charDiv'></div>")
+            var newImage = $("<img id='" + gryf[i].name + "' style='position: relative;' class='char' src='" + gryf[i].image + "' />");
+
+            $(newDiv).append(newImage)
+
+            $(charContain).append(newDiv)
+            $("#characterRow").append(charContain);
+            console.log(characters[i])
+
+        }
+    }
+    
     // FUNCTIONS
-    function appendImages() {
+    function appendImages(characters) {
         for (var i = 0; i < characters.length; i++) {
             var charContain = $("<div class='col-md-2 start'></div>")
-            var newDiv = $("<div id='"+ i +"'class='charDiv'></div>")
+            var newDiv = $("<div id='" + i + "'class='charDiv'></div>")
             var newImage = $("<img id='" + characters[i].name + "' style='position: relative;' class='char' src='" + characters[i].image + "' />");
-            
+
             $(newDiv).append(newImage)
-            
+
             $(charContain).append(newDiv)
             $("#characterRow").append(charContain);
             console.log(characters[i])
@@ -50,6 +133,7 @@ $(document).ready(function () {
         }
     }
 
+    
     function selections() {
         var chosenId = $(this).attr('id'); // grab id of clicked character
         console.log(chosenId);
@@ -63,7 +147,7 @@ $(document).ready(function () {
                 $(".hero").append(castBtn)
                 hero = $(this).parent().detach();
                 hero.appendTo('#heroStage');
-
+                chooseEnemyHouse();
                 choosing = CHOOSING_ENEMY;
                 break;
 
@@ -88,12 +172,12 @@ $(document).ready(function () {
     };
 
     function cast() {
-        
+
         var index = $(this).parent().attr('id')
         hero = characters[index]
         enemy = characters[enemyIndex]
         alert("lumos! you are attacking " + enemy.name)
-        
+
         // hero attacks enemy
         enemy.health = enemy.health - hero.attack
         console.log(enemy.health)
@@ -106,10 +190,16 @@ $(document).ready(function () {
 
     }
 
-    appendImages();
+    
+
+
+
+
+
+    // appendImages();
     $(document).on('click', '.char', selections);
     $(document).on('click', '.cast', cast)
-    
+
 });
 
 

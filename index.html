@@ -7,39 +7,55 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
         crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+    <!-- <link rel="stylesheet" type="text/css" href="assets/css/reset.css"> -->
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
 </head>
 
 <body>
 
-    <div class=header>
-        <h1>A Wizard's Duel!</h1>
-    </div>
-
-    <div class=container>
-        <div id="characterRow" class="row">
-        </div>
-    </div>
-    <br>
-    <div class=arena>
-        <div class="row">
-            <div class="col-sm-6 col-md-4">
-            </div>
-
-            <div class="col-sm-6 col-md-2">
-                <div id="heroStage" class="row"></div>
-            </div>
-
-            <div id="enemyStage" class="col-sm-6 col-md-2">
-            </div>
-
-            <div class="col-sm-6 col-md-4">
+    <div id="house">
+        <div class="container">
+            
+            <div class="row houseRow">
+               <h1>Choose Your House!</h1> 
             </div>
         </div>
     </div>
-    <script type="text/javascript" src=assets/javascript/game.js></script>
 
-</body>
+    <div id="enemyHouse">
+        <div class="container">
+            
+            <div class="row enemyRow">
+                <h1>Which House would you like to challenge to a wizard's duel?</h1>
+            </div>
+        </div>
+    </div>
 
-</html>
+    <div id="duel">
+        <div class=header>
+            <h1>A Wizard's Duel!</h1>
+        </div>
+
+        <div class=container>
+            <div id="characterRow" class="row">
+            </div>
+        </div>
+        <br>
+        <div class=arena>
+            <div class="row">
+                <div class="col-sm-6 col-md-4">
+                </div>
+
+                <div class="col-sm-6 col-md-2">
+                    <div id="heroStage" class="row"></div>
+                </div>
+
+                <div id="enemyStage" class="col-sm-6 col-md-2">
+                </div>
+
+                <div class="col-sm-6 col-md-4">
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src=assets/javascript/game.js> </script> </body> </html>
