@@ -24,6 +24,7 @@ $(document).ready(function () {
     var CHOOSING_PLAYER = 'CHOOSING_PLAYER';
     var CHOOSING_ENEMY = 'CHOOSING_ENEMY';
     var CHOOSING_DONE = 'CHOOSING_DONE';
+    var CHOOSING_HOUSES;
     var choosing = CHOOSING_PLAYER;
     var chosenHouse;
     var hero;
@@ -56,7 +57,7 @@ $(document).ready(function () {
     gryfArr.push(harry, hermoine, ron, cho)
     console.log(gryfArr)
 
-    var House = function(short, name, image, characters) {
+    var House = function (short, name, image, characters) {
         this.short = short
         this.name = name;
         this.image = image;
@@ -72,41 +73,58 @@ $(document).ready(function () {
     console.log(houses)
 
 
-    function showHouses(array, rowId) {
-        array.forEach(function(house) {
-            var imgDiv = $('<div class="col-md-3 house "' + house.short + '" data-house="' + house.name + '"><img class="' + house.short +'Img" src="' + house.image + '" alt=""></div>');
+    function showHouses(array, rowId, status) {
+        array.forEach(function (house) {
+            var imgDiv = $('<div class="col-md-3 house ' + status + ' ' + house.short + '" data-house="' + house.name + '"><img class="' + house.short + 'Img" src="' + house.image + '" alt=""></div>');
             $("." + rowId + "").append(imgDiv);
         });
         console.log("working!")
     };
 
-    showHouses(houses, "houseRow");
-    $(document).on("click", '.house', chooseHouse)
+    showHouses(houses, "houseRow", "hero");
+
 
     function chooseHouse() {
+
         chosenHouse = $(this).attr("data-house");
         console.log(chosenHouse)
         alert("Welcome to " + chosenHouse + "!")
+
         const housesLeft = houses.filter(
             house => chosenHouse !== house.name
         )
-        
+
         console.log(housesLeft);
         $("#house").hide();
-        showHouses(housesLeft, "enemyRow")
+        showHouses(housesLeft, "enemyRow", "enemy")
+
         $("#enemyHouse").show();
-        
-        
+        CHOOSING_HOUSES = true;
+        if (CHOOSING_HOUSE) {
+            console.log("choosing done!")
+            choosePlayer(chosenHouse);
+        }
     }
 
-  
+    $(document).on("click", '.hero', chooseHouse)
 
-    function choosePlayer(houseArr) {
+    function chooseEnemyHouse() {
+
+        console.log("choosing done!");
+        console.log(chosenHouse);
+        var chosenEnemyHouse = $(this).attr("data-house")
+        choosePlayer(chosenHouse);
+        console.log(chosenEnemyHouse);
+    }
+
+    $(document).on("click", '.enemy', chooseEnemyHouse)
+
+    function choosePlayer(chosenHouse) {
         console.log(gryf)
-        for (var i = 0; i < gryf.length; i++) {
+        for (var i = 0; i < chosenHouse.characters.length; i++) {
             var charContain = $("<div class='col-md-2 start'></div>")
             var newDiv = $("<div id='" + i + "'class='charDiv'></div>")
-            var newImage = $("<img id='" + gryf[i].name + "' style='position: relative;' class='char' src='" + gryf[i].image + "' />");
+            var newImage = $("<img id='" + chosenHouse.characters[i].name + "' style='position: relative;' class='char' src='" + chosenHouse.characters[i].image + "' />");
 
             $(newDiv).append(newImage)
 
@@ -116,7 +134,7 @@ $(document).ready(function () {
 
         }
     }
-    
+
     // FUNCTIONS
     function appendImages(characters) {
         for (var i = 0; i < characters.length; i++) {
@@ -133,7 +151,7 @@ $(document).ready(function () {
         }
     }
 
-    
+
     function selections() {
         var chosenId = $(this).attr('id'); // grab id of clicked character
         console.log(chosenId);
@@ -165,6 +183,8 @@ $(document).ready(function () {
                 alert("You've already chosen. Start casting!");
                 break;
 
+
+
             default:
                 alert('Error. Variable choosing has unrecognized value.');
         }
@@ -190,7 +210,7 @@ $(document).ready(function () {
 
     }
 
-    
+
 
 
 
