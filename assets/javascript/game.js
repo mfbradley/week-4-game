@@ -15,7 +15,6 @@ $(document).ready(function () {
     var CHOOSING_PLAYER = 'CHOOSING_PLAYER';
     var CHOOSING_ENEMY = 'CHOOSING_ENEMY';
     var CHOOSING_DONE = 'CHOOSING_DONE';
-    var CHOOSING_HOUSES = true;
     var choosing = CHOOSING_PLAYER;
     var chosenHouse;
     var chosenEnemyHouse;
@@ -82,8 +81,125 @@ $(document).ready(function () {
 
     // FUNCTIONS
 
+    // LOGIC
+    $("#sortHatImage").on("click", function (array) {
+        sortingHat = true;
+        var random = Math.floor(Math.random() * 4);
+        heroHouse = houses[random];
+        console.log("HERO HOUSE")
+        console.log(heroHouse)
+        $("#welcome").hide();
+        $("#image").show();
+        $("#image").css("background-image", "url('" + heroHouse.image + "')");
+        $("#image").css({ "background-repeat": "no-repeat", "background-position": "center", "height": "100vh" });
+        $("#houseName").text(heroHouse.name);
+
+        choosePlayer(heroHouse, "hero")
+
+    });
+
+    function choosePlayer(house, status) {
+        console.log("HOUSE IS ...")
+        console.log(house)
+
+        for (var i = 0; i < house.characters.length; i++) {
+            var charContain = $("<div data-house='" + house.name + "'id='" + i + "' class='col-md-3 start' data-house='" + house.short + "'></div>")
+            // var newDiv = $("<div id='" + i + "'class='charDiv'></div>")
+            var newImage = $("<img id='" + house.characters[i].name + "' style='position: relative;' class='char' src='" + house.characters[i].image + "' />");
+
+            // $(newDiv).append(newImage)
+
+            $(charContain).append(newImage)
+            $("." + status + "Chars").append(charContain);
+            console.log(house.characters[i])
+
+        }
+    }
+
+    // function selections() {
+    //     var chosenId = $(this).attr('id'); // grab id of clicked character
+
+    //     switch (choosing) {
+    //         case CHOOSING_PLAYER:
+    //             hero = $(this).attr('id')
+    //             $(this).parent().attr('class', 'caster')
+    //             alert('You are entering the duel as ' + hero + "! Best of Luck.");
+    //             var castBtn = $("<button class='cast' style='position: absolute; bottom: 10px; right: 50px'>Cast!</button>");
+    //             $(".caster").append(castBtn)
+    //             hero = $(this).parent().detach();
+    //             hero.appendTo('#heroStage');
+    //             if (sortingHat) {
+    //                 randomEnemy();
+
+    //             }
+    //             choosing = CHOOSING_ENEMY;
+
+    //             break;
+
+    //         case CHOOSING_ENEMY:
+
+    //             randomEnemy();
+    //             enemy = chosenId;
+    //             alert('You have chosen ' + enemy + ' as your enemy!');
+    //             // enemy = $(this).parent().detach();
+    //             // console.log(enemy)
+    //             // enemy.appendTo('#enemyStage');
+    //             // enemyIndex = $(this).parent().attr('id')
+    //             // choosing = CHOOSING_DONE;
+    //             // $("#houseDivided").hide();
+    //             // $("#duel").show();
+    //             break;
+
+    //         case CHOOSING_DONE:
+    //             alert("You've already chosen. Start casting!");
+
+    //             break;
 
 
+
+    //         default:
+    //             alert('Error. Variable choosing has unrecognized value.');
+    //     }
+
+    // };
+
+    function randomEnemy() {
+        var heroChosenId = $(this).parent().attr("id");
+        console.log(heroChosenId)
+        console.log(heroHouse)
+        var heroImage = heroHouse.characters[heroChosenId].image;
+        var hero = $(this).attr("id")
+        $(this).attr('class', 'caster');
+        console.log($(this))
+        alert('You are entering the duel as ' + hero + "! Best of Luck.");
+        var castBtn = $("<button class='cast' style='position:absolute; bottom:10px; right:50px'>Cast!</button>");
+        
+
+        const housesLeft = houses.filter(
+            house => heroHouse.name !== house.name
+        )
+
+        console.log("HOUSES LEFT")
+        console.log(housesLeft)
+
+        var randEn = Math.floor(Math.random() * 3);
+        enemyHouse = housesLeft[randEn];
+
+        console.log(enemyHouse)
+        var enemy = enemyHouse.characters[opponentCount]
+        alert("Prepare to cast against your opponent " + enemy.name)
+        console.log(enemy)
+        $("#heroStage").html("<img id='caster' class='char' src='" + heroImage + "' src='' style='position:relative'>")
+        $("#heroStage").append(castBtn)
+        $("#enemyStage").html("<img class='char' src='" + enemy.image + "' alt=''>");
+
+        console.log($("#enemyStage").children());
+        $("#image").hide();
+        $("#duel").show();
+    }
+
+    $(document).on('click', '.char', randomEnemy);
+    $(document).on('click', '.cast', cast)
 
     // // show house images so user can choose hero and opponent houses
     // function showHouses(array, rowId, status) {
@@ -173,95 +289,10 @@ $(document).ready(function () {
 
     // }
 
-    function choosePlayer(house, status) {
-        console.log("HOUSE IS ...")
-        console.log(house)
-
-        for (var i = 0; i < house.characters.length; i++) {
-            var charContain = $("<div id='" + i + "' class='col-md-3 start' data-house='" + house.short + "'></div>")
-            // var newDiv = $("<div id='" + i + "'class='charDiv'></div>")
-            var newImage = $("<img id='" + house.characters[i].name + "' style='position: relative;' class='char' src='" + house.characters[i].image + "' />");
-
-            // $(newDiv).append(newImage)
-
-            $(charContain).append(newImage)
-            $("." + status + "Chars").append(charContain);
-            console.log(house.characters[i])
-
-        }
-    }
-
-
-    function selections() {
-        var chosenId = $(this).attr('id'); // grab id of clicked character
-
-        switch (choosing) {
-            case CHOOSING_PLAYER:
-                hero = $(this).attr('id')
-                $(this).parent().attr('class', 'caster')
-                alert('You are entering the duel as ' + hero + "! Best of Luck.");
-                var castBtn = $("<button class='cast' style='position: absolute; bottom: 10px; right: 50px'>Cast!</button>");
-                $(".caster").append(castBtn)
-                hero = $(this).parent().detach();
-                hero.appendTo('#heroStage');
-                if (sortingHat) {
-                    randomEnemy();
-                    
-                }
-                choosing = CHOOSING_ENEMY;
-
-                break;
-
-            case CHOOSING_ENEMY:
-
-                randomEnemy();
-
-
-                enemy = chosenId;
-                alert('You have chosen ' + enemy + ' as your enemy!');
-                // enemy = $(this).parent().detach();
-                // console.log(enemy)
-                // enemy.appendTo('#enemyStage');
-                // enemyIndex = $(this).parent().attr('id')
-                // choosing = CHOOSING_DONE;
-                // $("#houseDivided").hide();
-                // $("#duel").show();
-                break;
-
-            case CHOOSING_DONE:
-                alert("You've already chosen. Start casting!");
-
-                break;
 
 
 
-            default:
-                alert('Error. Variable choosing has unrecognized value.');
-        }
 
-    };
-    function randomEnemy() {
-
-
-        const housesLeft = houses.filter(
-            house => heroHouse.name !== house.name
-        )
-
-        housesLeft.forEach(function (house) {
-            var randEn = Math.floor(Math.random() * 4);
-            enemyHouse = housesLeft[randEn];
-        });
-
-        var enemy = enemyHouse.characters[opponentCount]
-        console.log(enemy)
-        $("#enemyStage").append("<img src='' alt=''");
-
-        console.log($("#enemyStage").children());
-        $("#image").hide();
-        $("#duel").show();
-
-        choosing = CHOOSING_DONE
-    }
     // function passArray(info) {
     //     console.log(info)
     // }
@@ -311,34 +342,20 @@ $(document).ready(function () {
 
 
 
-    $("#sortHatImage").on("click", function (array) {
-        sortingHat = true;
-        var random = Math.floor(Math.random() * 4);
-        heroHouse = houses[random];
-        console.log(heroHouse)
-        $("#welcome").hide();
-        $("#image").show();
-        $("#image").css("background-image", "url('" + heroHouse.image + "')");
-        $("#image").css({ "background-repeat": "no-repeat", "background-position": "center", "height": "100vh" });
-        $("#houseName").text(heroHouse.name);
 
-        choosePlayer(heroHouse, "hero")
 
-    });
-
-    $("#pickHouse").on("click", function () {
-        alert("choosing")
-        showHouses(houses, "houseRow", "hero");
-        $("#sortDiv").hide();
-    });
+    // $("#pickHouse").on("click", function () {
+    //     alert("choosing")
+    //     showHouses(houses, "houseRow", "hero");
+    //     $("#sortDiv").hide();
+    // });
 
     // $(document).on("click", '.hero', chooseHouse);
 
     // $(document).on("click", '.enemy', chooseEnemyHouse)
 
     // appendImages();
-    $(document).on('click', '.char', selections);
-    $(document).on('click', '.cast', cast)
+
 
 });
 
