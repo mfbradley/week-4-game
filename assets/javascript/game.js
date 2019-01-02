@@ -164,16 +164,16 @@ $(document).ready(function () {
     // };
 
     function randomEnemy() {
-        var heroChosenId = $(this).parent().attr("id");
-        console.log(heroChosenId)
+        var heroIndex = $(this).parent().attr("id");
+        console.log(heroIndex)
         console.log(heroHouse)
-        var heroImage = heroHouse.characters[heroChosenId].image;
-        var hero = $(this).attr("id")
+        var heroImage = heroHouse.characters[heroIndex].image;
+        hero = $(this).attr("id")
         $(this).attr('class', 'caster');
         console.log($(this))
         alert('You are entering the duel as ' + hero + "! Best of Luck.");
-        var castBtn = $("<button class='cast' style='position:absolute; bottom:10px; right:50px'>Cast!</button>");
-        
+        var castBtn = $("<button class='cast' data-index='" + heroIndex + "' style='position:absolute; bottom:10px; right:50px'>Cast!</button>");
+
 
         const housesLeft = houses.filter(
             house => heroHouse.name !== house.name
@@ -186,7 +186,7 @@ $(document).ready(function () {
         enemyHouse = housesLeft[randEn];
 
         console.log(enemyHouse)
-        var enemy = enemyHouse.characters[opponentCount]
+        enemy = enemyHouse.characters[opponentCount]
         alert("Prepare to cast against your opponent " + enemy.name)
         console.log(enemy)
         $("#heroStage").html("<img id='caster' class='char' src='" + heroImage + "' src='' style='position:relative'>")
@@ -197,6 +197,34 @@ $(document).ready(function () {
         $("#image").hide();
         $("#duel").show();
     }
+
+    // function passArray(info) {
+    //     console.log(info)
+    // }
+
+    function cast() {
+        // passArray(houses)
+        heroIndex = $(this).attr("data-index");
+        hero = heroHouse.characters[heroIndex];
+        
+        console.log(hero)
+        console.log(enemy)
+
+        alert("lumos! you are attacking " + enemy.name)
+
+        // hero attacks enemy
+        enemy.health = enemy.health - hero.attack
+        console.log(enemy.health)
+        alert(enemy.name + "'s health was damaged by your attack and has been decreased to " + enemy.health)
+        // enemy counter attacks hero
+        hero.health = hero.health - enemy.counter;
+        console.log(hero.health)
+        alert(enemy.name + ' countered your attack! your currenth health is ' + hero.health)
+        // var Character = function (name, health, attack, counter, image)
+
+    }
+
+    // show hero houses when page loads
 
     $(document).on('click', '.char', randomEnemy);
     $(document).on('click', '.cast', cast)
@@ -293,52 +321,6 @@ $(document).ready(function () {
 
 
 
-    // function passArray(info) {
-    //     console.log(info)
-    // }
-
-    // function cast() {
-    //     passArray(houses)
-    //     var index = $(this).parent().attr('id');
-    //     var house = $(this).parent().attr("data-house");
-    //     var enemyHouse = $("#enemyStage").children().attr("data-house");
-    //     var enemyIndex = $("#enemyStage").children().attr("id");
-    //     console.log(gryf.characters[index])
-
-    //     console.log(house)
-    //     for (var i = 0; i < houses.length; i++) {
-    //         console.log(houses[i].short)
-    //         if (houses[i].short === house) {
-
-    //             house = houses[i];
-    //         }
-    //         if (houses[i].short === enemyHouse) {
-    //             enemyHouse = houses[i];
-    //         }
-    //     }
-    //     console.log(house)
-    //     hero = house.characters[index];
-    //     enemy = enemyHouse.characters[enemyIndex];
-    //     console.log('ENEMY')
-    //     console.log(enemy)
-    //     console.log('HERO')
-    //     console.log(hero)
-
-    //     alert("lumos! you are attacking " + enemy.name)
-
-    //     // hero attacks enemy
-    //     enemy.health = enemy.health - hero.attack
-    //     console.log(enemy.health)
-    //     alert(enemy.name + "'s health was damaged by your attack and has been decreased to " + enemy.health)
-    //     // enemy counter attacks hero
-    //     hero.health = hero.health - enemy.counter;
-    //     console.log(hero.health)
-    //     alert(enemy.name + ' countered your attack! your currenth health is ' + hero.health)
-    //     // var Character = function (name, health, attack, counter, image)
-
-    // }
-
-    // // show hero houses when page loads
 
 
 
