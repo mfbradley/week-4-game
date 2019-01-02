@@ -12,20 +12,26 @@
 </head>
 
 <body>
-
-    <div id="house">
-        <div class="container">
-            <div class="row houseRow">
-               <h1>Choose Your House!</h1> 
-            </div>
-        </div>
+    <div id="welcome">
+        <h1>Welcome to A Hogwart's Wizard's Duel!</h1>
+        <h2>When you are ready to begin, click the Sorting Hat to be sorted into your house</h2>
+        <br><br>
+        <img id="sortHatImage" src="assets/images/hat.png" alt="">
     </div>
 
+    <div id="image" class="heroChars">
+        <h1>Welcome to <span id="houseName"></span>!</h1>
+        <h2>Click an image below to choose your character.</h2>
+    </div>
+
+    <div id="house">
+        <div class="row houseRow">
+            <h1>Choose Your House!</h1>
+        </div>
+    </div>
     <div id="enemyHouse">
-        <div class="container">
-            <div class="row enemyRow">
-                <h1>Which House would you like to challenge to a wizard's duel?</h1>
-            </div>
+        <div class="row enemyRow">
+            <h1>Which House would you like to challenge to a wizard's duel?</h1>
         </div>
     </div>
 
@@ -34,7 +40,7 @@
             <div class="col-md-6 heroColor">
                 <h1>Choose Your Character</h1>
                 <div class="row heroChars">
-                    
+
                 </div>
             </div>
             <div class="col-md-6 enemyColor">
@@ -62,7 +68,10 @@
                     <div id="heroStage" class="row"></div>
                 </div>
 
-                <div id="enemyStage" class="col-sm-6 col-md-2">
+                <div class="col-sm-6 col-md-2">
+                    <div id="enemyStage">
+                        
+                    </div>
                 </div>
 
                 <div class="col-sm-6 col-md-4">

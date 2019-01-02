@@ -1,11 +1,16 @@
 $(document).ready(function () {
     // user picks house
     // show choose your house div only - hide all others
+    $("#image").hide();
+    $("#sortDiv").hide();
+    $("#house").hide();
+    $("#userHouse").hide();
     $("#duel").hide();
     $("#enemyHouse").hide();
     $("#houseDivided").hide();
 
     // VARIABLES
+    var opponentCount = 0;
     var houses = [];
     var CHOOSING_PLAYER = 'CHOOSING_PLAYER';
     var CHOOSING_ENEMY = 'CHOOSING_ENEMY';
@@ -16,10 +21,12 @@ $(document).ready(function () {
     var chosenEnemyHouse;
     var hero;
     var enemy;
+    var heroHouse;
     var enemyCounter;
     var resetDuel;
     var healthPoints;
     var attackPower;
+    var sortingHat = false;
 
     // CONSTRUCTORS
     // create characters
@@ -74,92 +81,97 @@ $(document).ready(function () {
     slyth.addCharacter("Lord Voldemort", 179, 4, 9, "assets/images/volde.jpg")
 
     // FUNCTIONS
-    // show house images so user can choose hero and opponent houses
-    function showHouses(array, rowId, status) {
-        array.forEach(function (house) {
-            var imgDiv = $('<div class="col-md-3 house ' + status + ' ' + house.short + '" data-house="' + house.name + '"><img class="' + house.short + 'Img" src="' + house.image + '" alt=""></div>');
-            $("." + rowId + "").append(imgDiv);
-        });
-    };
 
-    // user picks their house (hero house)
-    function chooseHouse() {
-        chosenHouse = $(this).attr("data-house");
-        alert("Welcome to " + chosenHouse + "!");
-        // filter out houses left (3)
-        const housesLeft = houses.filter(
-            house => chosenHouse !== house.name
-        )
 
-        // load choose your enemy house screen
-        $("#house").hide();
 
-        // reload houses with remaining houses only
-        showHouses(housesLeft, "enemyRow", "enemy");
 
-        $("#enemyHouse").show();
+    // // show house images so user can choose hero and opponent houses
+    // function showHouses(array, rowId, status) {
+    //     array.forEach(function (house) {
+    //         var imgDiv = $('<div class="col-md-3 house ' + status + ' ' + house.short + '" data-house="' + house.name + '"><img class="' + house.short + 'Img" src="' + house.image + '" alt=""></div>');
+    //         $("." + rowId + "").append(imgDiv);
+    //     });
+    // };
 
-    }
 
-    // user picks enemy house
-    function chooseEnemyHouse() {
+    // // user picks their house (hero house)
+    // function chooseHouse() {
+    //     chosenHouse = $(this).attr("data-house");
+    //     alert("Welcome to " + chosenHouse + "!");
+    //     // filter out houses left (3)
+    //     const housesLeft = houses.filter(
+    //         house => chosenHouse !== house.name
+    //     )
 
-        console.log("choosing done!");
-        chosenEnemyHouse = $(this).attr("data-house");
+    //     // load choose your enemy house screen
+    //     $("#house").hide();
 
-        $(".enemyRow").hide();
-        $("#houseDivided").show();
+    //     // reload houses with remaining houses only
+    //     showHouses(housesLeft, "enemyRow", "enemy");
 
-        showHouseColors();
+    //     $("#enemyHouse").show();
 
-    }
+    // }
 
-    function showHouseColors() {
-        $("#houseDivided").show;
-        console.log(chosenHouse)
-        switch (chosenHouse) {
-            case "Gryffindor":
-                $(".heroColor").css({ "background-image": "url('https://i.imgur.com/jnHkdOy.gif')", "background-repeat": "no-repeat", "background-size": "cover" });
-                choosePlayer(gryf, "hero");
-                console.log("gryf hero")
-                break;
-            case "Hufflepuff":
-                $(".heroColor").css({ "background-image": "url('https://i.imgur.com/cV2E3T0.jpg')", "background-repeat": "no-repeat", "background-size": "cover" });
-                choosePlayer(huff, "hero");
-                console.log("huff hero")
-                break;
-            case "Ravenclaw": $(".heroColor").css({ "background-image": "url('https://s-media-cache-ak0.pinimg.com/originals/95/87/f3/9587f305825d378206019edddd392a19.gif')", "background-repeat": "no-repeat", "background-size": "cover" });
-                choosePlayer(rave, "hero");
-                console.log("rave hero")
-                break;
-            case "Slytherin": $(".heroColor").css({ "background-image": "url('https://i.pinimg.com/originals/72/86/8e/72868ea628013cb62ae0de1aa8e6d2c0.gif')", "background-repeat": "no-repeat", "background-size": "cover" });
-                choosePlayer(slyth, "hero");
-                console.log("slyth hero")
-                break;
-            default: alert("chosenHouse has no value")
-        }
+    // // user picks enemy house
+    // function chooseEnemyHouse() {
 
-        switch (chosenEnemyHouse) {
-            case "Gryffindor": $(".enemyColor").css({ "background-image": "url('https://i.imgur.com/jnHkdOy.gif')", "background-repeat": "no-repeat", "background-size": "cover" });
-                choosePlayer(gryf, "enemy");
-                console.log("gryf enemy")
-                break;
-            case "Hufflepuff": $(".enemyColor").css({ "background-image": "url('https://i.imgur.com/cV2E3T0.jpg')", "background-repeat": "no-repeat", "background-size": "cover" });
-                choosePlayer(huff, "enemy");
-                console.log("huff enemy")
-                break;
-            case "Ravenclaw": $(".enemyColor").css({ "background-image": "url('https://s-media-cache-ak0.pinimg.com/originals/95/87/f3/9587f305825d378206019edddd392a19.gif')", "background-repeat": "no-repeat", "background-size": "cover" });
-                choosePlayer(rave, "enemy");
-                console.log("rave enemy")
-                break;
-            case "Slytherin": $(".enemyColor").css({ "background-image": "url('https://i.pinimg.com/originals/72/86/8e/72868ea628013cb62ae0de1aa8e6d2c0.gif')", "background-repeat": "no-repeat", "background-size": "cover" });
-                choosePlayer(slyth, "enemy");
-                console.log("slyth enemy")
-                break;
-            default: alert("chosenEnemyHouse has no value")
-        }
+    //     console.log("choosing done!");
+    //     chosenEnemyHouse = $(this).attr("data-house");
 
-    }
+    //     $(".enemyRow").hide();
+    //     $("#houseDivided").show();
+
+    //     showHouseColors();
+
+    // }
+
+    // function showHouseColors() {
+    //     $("#houseDivided").show;
+    //     console.log(chosenHouse)
+    //     switch (chosenHouse) {
+    //         case "Gryffindor":
+    //             $(".heroColor").css({ "background-image": "url('https://i.imgur.com/jnHkdOy.gif')", "background-repeat": "no-repeat", "background-size": "cover" });
+    //             choosePlayer(gryf, "hero");
+    //             console.log("gryf hero")
+    //             break;
+    //         case "Hufflepuff":
+    //             $(".heroColor").css({ "background-image": "url('https://i.imgur.com/cV2E3T0.jpg')", "background-repeat": "no-repeat", "background-size": "cover" });
+    //             choosePlayer(huff, "hero");
+    //             console.log("huff hero")
+    //             break;
+    //         case "Ravenclaw": $(".heroColor").css({ "background-image": "url('https://s-media-cache-ak0.pinimg.com/originals/95/87/f3/9587f305825d378206019edddd392a19.gif')", "background-repeat": "no-repeat", "background-size": "cover" });
+    //             choosePlayer(rave, "hero");
+    //             console.log("rave hero")
+    //             break;
+    //         case "Slytherin": $(".heroColor").css({ "background-image": "url('https://i.pinimg.com/originals/72/86/8e/72868ea628013cb62ae0de1aa8e6d2c0.gif')", "background-repeat": "no-repeat", "background-size": "cover" });
+    //             choosePlayer(slyth, "hero");
+    //             console.log("slyth hero")
+    //             break;
+    //         default: alert("chosenHouse has no value")
+    //     }
+
+    //     switch (chosenEnemyHouse) {
+    //         case "Gryffindor": $(".enemyColor").css({ "background-image": "url('https://i.imgur.com/jnHkdOy.gif')", "background-repeat": "no-repeat", "background-size": "cover" });
+    //             choosePlayer(gryf, "enemy");
+    //             console.log("gryf enemy")
+    //             break;
+    //         case "Hufflepuff": $(".enemyColor").css({ "background-image": "url('https://i.imgur.com/cV2E3T0.jpg')", "background-repeat": "no-repeat", "background-size": "cover" });
+    //             choosePlayer(huff, "enemy");
+    //             console.log("huff enemy")
+    //             break;
+    //         case "Ravenclaw": $(".enemyColor").css({ "background-image": "url('https://s-media-cache-ak0.pinimg.com/originals/95/87/f3/9587f305825d378206019edddd392a19.gif')", "background-repeat": "no-repeat", "background-size": "cover" });
+    //             choosePlayer(rave, "enemy");
+    //             console.log("rave enemy")
+    //             break;
+    //         case "Slytherin": $(".enemyColor").css({ "background-image": "url('https://i.pinimg.com/originals/72/86/8e/72868ea628013cb62ae0de1aa8e6d2c0.gif')", "background-repeat": "no-repeat", "background-size": "cover" });
+    //             choosePlayer(slyth, "enemy");
+    //             console.log("slyth enemy")
+    //             break;
+    //         default: alert("chosenEnemyHouse has no value")
+    //     }
+
+    // }
 
     function choosePlayer(house, status) {
         console.log("HOUSE IS ...")
@@ -179,6 +191,7 @@ $(document).ready(function () {
         }
     }
 
+
     function selections() {
         var chosenId = $(this).attr('id'); // grab id of clicked character
 
@@ -191,24 +204,33 @@ $(document).ready(function () {
                 $(".caster").append(castBtn)
                 hero = $(this).parent().detach();
                 hero.appendTo('#heroStage');
+                if (sortingHat) {
+                    randomEnemy();
+                    
+                }
                 choosing = CHOOSING_ENEMY;
+
                 break;
 
             case CHOOSING_ENEMY:
+
+                randomEnemy();
+
+
                 enemy = chosenId;
                 alert('You have chosen ' + enemy + ' as your enemy!');
-                enemy = $(this).parent().detach();
-                console.log(enemy)
-                enemy.appendTo('#enemyStage');
-                enemyIndex = $(this).parent().attr('id')
-                choosing = CHOOSING_DONE;
-                $("#houseDivided").hide();
-                $("#duel").show();
+                // enemy = $(this).parent().detach();
+                // console.log(enemy)
+                // enemy.appendTo('#enemyStage');
+                // enemyIndex = $(this).parent().attr('id')
+                // choosing = CHOOSING_DONE;
+                // $("#houseDivided").hide();
+                // $("#duel").show();
                 break;
 
             case CHOOSING_DONE:
                 alert("You've already chosen. Start casting!");
-                
+
                 break;
 
 
@@ -218,58 +240,101 @@ $(document).ready(function () {
         }
 
     };
+    function randomEnemy() {
 
-    function passArray(info) {
-        console.log(info)
-    }
 
-    function cast() {
-        passArray(houses)
-        var index = $(this).parent().attr('id');
-        var house = $(this).parent().attr("data-house");
-        var enemyHouse = $("#enemyStage").children().attr("data-house");
-        var enemyIndex = $("#enemyStage").children().attr("id");
-        console.log(gryf.characters[index])
+        const housesLeft = houses.filter(
+            house => heroHouse.name !== house.name
+        )
 
-        console.log(house)
-        for(var i = 0; i < houses.length; i++) {
-            console.log(houses[i].short)
-            if(houses[i].short === house) {
-                
-                house = houses[i];
-            }
-            if(houses[i].short === enemyHouse) {
-                enemyHouse = houses[i];
-            }
-        }
-        console.log(house)
-        hero = house.characters[index];
-        enemy = enemyHouse.characters[enemyIndex];
-        console.log('ENEMY')
+        housesLeft.forEach(function (house) {
+            var randEn = Math.floor(Math.random() * 4);
+            enemyHouse = housesLeft[randEn];
+        });
+
+        var enemy = enemyHouse.characters[opponentCount]
         console.log(enemy)
-        console.log('HERO')
-        console.log(hero)
-       
-        alert("lumos! you are attacking " + enemy.name)
+        $("#enemyStage").append("<img src='' alt=''");
 
-        // hero attacks enemy
-        enemy.health = enemy.health - hero.attack
-        console.log(enemy.health)
-        alert(enemy.name + "'s health was damaged by your attack and has been decreased to " + enemy.health)
-        // enemy counter attacks hero
-        hero.health = hero.health - enemy.counter;
-        console.log(hero.health)
-        alert(enemy.name + ' countered your attack! your currenth health is ' + hero.health)
-        // var Character = function (name, health, attack, counter, image)
+        console.log($("#enemyStage").children());
+        $("#image").hide();
+        $("#duel").show();
 
+        choosing = CHOOSING_DONE
     }
+    // function passArray(info) {
+    //     console.log(info)
+    // }
 
-    // show hero houses when page loads
-    showHouses(houses, "houseRow", "hero");
+    // function cast() {
+    //     passArray(houses)
+    //     var index = $(this).parent().attr('id');
+    //     var house = $(this).parent().attr("data-house");
+    //     var enemyHouse = $("#enemyStage").children().attr("data-house");
+    //     var enemyIndex = $("#enemyStage").children().attr("id");
+    //     console.log(gryf.characters[index])
 
-    $(document).on("click", '.hero', chooseHouse);
+    //     console.log(house)
+    //     for (var i = 0; i < houses.length; i++) {
+    //         console.log(houses[i].short)
+    //         if (houses[i].short === house) {
 
-    $(document).on("click", '.enemy', chooseEnemyHouse)
+    //             house = houses[i];
+    //         }
+    //         if (houses[i].short === enemyHouse) {
+    //             enemyHouse = houses[i];
+    //         }
+    //     }
+    //     console.log(house)
+    //     hero = house.characters[index];
+    //     enemy = enemyHouse.characters[enemyIndex];
+    //     console.log('ENEMY')
+    //     console.log(enemy)
+    //     console.log('HERO')
+    //     console.log(hero)
+
+    //     alert("lumos! you are attacking " + enemy.name)
+
+    //     // hero attacks enemy
+    //     enemy.health = enemy.health - hero.attack
+    //     console.log(enemy.health)
+    //     alert(enemy.name + "'s health was damaged by your attack and has been decreased to " + enemy.health)
+    //     // enemy counter attacks hero
+    //     hero.health = hero.health - enemy.counter;
+    //     console.log(hero.health)
+    //     alert(enemy.name + ' countered your attack! your currenth health is ' + hero.health)
+    //     // var Character = function (name, health, attack, counter, image)
+
+    // }
+
+    // // show hero houses when page loads
+
+
+
+    $("#sortHatImage").on("click", function (array) {
+        sortingHat = true;
+        var random = Math.floor(Math.random() * 4);
+        heroHouse = houses[random];
+        console.log(heroHouse)
+        $("#welcome").hide();
+        $("#image").show();
+        $("#image").css("background-image", "url('" + heroHouse.image + "')");
+        $("#image").css({ "background-repeat": "no-repeat", "background-position": "center", "height": "100vh" });
+        $("#houseName").text(heroHouse.name);
+
+        choosePlayer(heroHouse, "hero")
+
+    });
+
+    $("#pickHouse").on("click", function () {
+        alert("choosing")
+        showHouses(houses, "houseRow", "hero");
+        $("#sortDiv").hide();
+    });
+
+    // $(document).on("click", '.hero', chooseHouse);
+
+    // $(document).on("click", '.enemy', chooseEnemyHouse)
 
     // appendImages();
     $(document).on('click', '.char', selections);
