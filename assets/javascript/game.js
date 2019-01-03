@@ -98,8 +98,8 @@ $(document).ready(function () {
 
     function choosePlayer(house, status) {
         for (var i = 0; i < house.characters.length; i++) {
-            var charContain = $("<div data-house='" + house.name + "'id='" + i + "' class='col-md-3 start' data-house='" + house.short + "'></div>");
-            var newImage = $("<img id='" + house.characters[i].name + "' style='position: relative;' class='char' src='" + house.characters[i].image + "' />");
+            var charContain = $("<div data-house='" + house.name + "'id='" + i + "' class='col-xs-4 col-md-3 start charOptions' data-house='" + house.short + "'></div>");
+            var newImage = $("<img id='" + house.characters[i].name + "' style='position: relative;' class='mt-auto char' src='" + house.characters[i].image + "' />");
             $(charContain).append(newImage);
             $("." + status + "Chars").append(charContain);
         }
